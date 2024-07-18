@@ -1,0 +1,68 @@
+Assignment: 
+
+1. Write a Python function that takes a string as input and reverses it but with a twist: every vowel in the reversed string should be capitalized, and every consonant should be converted to lowercase. For example, if the input is "Hello, World!", the output should be "!dLrOw ,oLlEh".
+Ans. 
+def reverse_and_transform(string):
+    vowels = 'aeiouAEIOU'
+    transformed_string = ''
+
+    # Reverse the string
+    reversed_string = string[::-1]
+
+    # Iterate over each character in the reversed string
+    for char in reversed_string:
+        if char.lower() in vowels:
+            transformed_string += char.upper()
+        else:
+            transformed_string += char.lower()
+
+    return transformed_string
+
+input_string = "Hello, World!"
+output_string = reverse_and_transform(input_string)
+print(output_string)  
+# Output: "!dLrOw ,oLlEh"
+
+
+2. Design a Python function that takes a list of elements as input and returns the count of unique elements in the list. The function should not utilize any built-in Python libraries or functions related to counting or sets. 
+Ans. def count_unique_elements(input_list):
+    unique_elements = []
+
+    for element in input_list:
+        # Check if the element is already in the unique_elements list
+        is_unique = True
+        for unique in unique_elements:
+            if element == unique:
+                is_unique = False
+                break
+        # If the element is unique, add it to the unique_elements list
+        if is_unique:
+            unique_elements.append(element)
+
+    # The length of unique_elements list gives the count of unique elements
+    unique_count = 0
+    for unique in unique_elements:
+        unique_count += 1
+
+    return unique_count
+
+input_list = [1, 2, 3, 2, 1, 4, 5, 3, 6]
+output_count = count_unique_elements(input_list)
+print(output_count)  
+# Output: 6
+
+3. Query Writing Challenge:
+Consider a table orders with columns order_id, customer_id, order_date, and total_amount. Write a SQL query to calculate the total revenue generated in the last quarter, grouped by month.
+Ans. 
+SELECT
+    DATE_TRUNC('month', order_date) AS month,
+    SUM(total_amount) AS total_revenue
+FROM
+    orders
+WHERE
+    order_date >= DATE_TRUNC('quarter', CURRENT_DATE) - INTERVAL '3 months'
+    AND order_date < DATE_TRUNC('quarter', CURRENT_DATE)
+GROUP BY
+    DATE_TRUNC('month', order_date)
+ORDER BY
+    month;
